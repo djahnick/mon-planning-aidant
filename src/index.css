@@ -3,3 +3,73 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* --------------------------------------- */
+/* 1) Taille réduite pour tous les boutons */
+/* --------------------------------------- */
+@layer components {
+  .fc .fc-button {
+    font-size: 0.875rem;   /* équivalent text-sm */
+    padding: 0.25rem 0.5rem; /* équivalent py-1 px-2 */
+  }
+}
+
+/* ------------------------------------------------------ */
+/* 2) En mobile (<640px) : masque le switch Mois/Semaine  */
+/*    et centre uniquement prev/today/next                */
+/* ------------------------------------------------------ */
+@layer components {
+  @screen sm {
+    /* cache la 3ᵉ partie du header (Mois/Semaine/Jour) */
+    .fc .fc-header-toolbar .fc-toolbar-chunk:nth-child(3) {
+      display: none;
+    }
+    /* centre la première partie (prev/today/next) */
+    .fc .fc-header-toolbar .fc-toolbar-chunk:nth-child(1) {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+  }
+}
+/* ---------------------------------------------------------------- */
+/* 3) En mobile (<640px) : stack header / réordonne les 3 chunks   */
+/* ---------------------------------------------------------------- */
+@layer components {
+  @screen sm {
+    /* toolbar en colonne */
+    .fc .fc-header-toolbar {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0.5rem;
+    }
+
+    /* chaque chunk fait 100% de large */
+    .fc .fc-header-toolbar .fc-toolbar-chunk {
+      width: 100%;
+      display: flex;
+    }
+
+    /* 1) chunk centre (titre) en premier, centré */
+    .fc .fc-header-toolbar .fc-toolbar-chunk:nth-child(2) {
+      order: 0;
+      justify-content: center;
+      margin-bottom: 0.25rem;
+    }
+
+    /* 2) chunk gauche (prev/today/next) ensuite, centré */
+    .fc .fc-header-toolbar .fc-toolbar-chunk:nth-child(1) {
+      order: 1;
+      justify-content: center;
+      margin-bottom: 0.25rem;
+    }
+
+    /* 3) chunk droite (Mois/Semaine/Jour) en dernier, centré */
+    .fc .fc-header-toolbar .fc-toolbar-chunk:nth-child(3) {
+      order: 2;
+      justify-content: center;
+      overflow-x: auto; /* si overflow sur petits écrans */
+    }
+  }
+}

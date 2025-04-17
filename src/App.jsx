@@ -6,6 +6,8 @@ import Planning from './components/Planning';
 import Clients from './components/Clients';
 import Employes from './components/Employes';
 import Recap from './components/Recap';
+import { db } from './firebase';
+console.log('Firestore ready:', db);
 
 function App() {
   return (

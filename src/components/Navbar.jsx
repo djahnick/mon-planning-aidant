@@ -3,12 +3,14 @@ import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 const AppNavbar = () => {
-  // Récupère la route actuelle (ex. "/clients", "/employes", etc.)
   const location = useLocation();
 
+  const isActive = (path) =>
+    location.pathname === path ? 'text-blue-700' : 'text-gray-900';
+
   return (
-    <nav className="bg-white border-gray-200 dark:bg-gray-900">
-      <div className="max-w-screen-xl flex items-center justify-between mx-auto p-4">
+    <nav className="bg-white border-gray-200 dark:bg-gray-900 shadow">
+      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <Link to="/" className="flex items-center">
           <img
             src="https://flowbite.com/docs/images/logo.svg"
@@ -19,66 +21,48 @@ const AppNavbar = () => {
             Mon Planning Aidant
           </span>
         </Link>
-        
-        {/* Menu affiché en ligne */}
-        <ul className="font-medium flex flex-row p-4 space-x-8">
-          {/* Link PLANNING */}
-          <li>
-            <Link
-              to="/"
-              // Compare la route actuelle ; si c'est "/", alors applique la couleur bleue
-              className={
-                location.pathname === "/"
-                  ? "py-2 px-3 text-blue-700"
-                  : "py-2 px-3 text-gray-900"
-              }
-            >
-              Planning
-            </Link>
-          </li>
 
-          {/* Link CLIENTS */}
-          <li>
-            <Link
-              to="/clients"
-              className={
-                location.pathname === "/clients"
-                  ? "py-2 px-3 text-blue-700"
-                  : "py-2 px-3 text-gray-900"
-              }
-            >
-              Clients
-            </Link>
-          </li>
+        <button
+          data-collapse-toggle="navbar-default"
+          type="button"
+          className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
+          aria-controls="navbar-default"
+          aria-expanded="false"
+          onClick={() => {
+            const menu = document.getElementById('navbar-default');
+            menu.classList.toggle('hidden');
+          }}
+        >
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
+              d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
 
-          {/* Link EMPLOYÉES */}
-          <li>
-            <Link
-              to="/employes"
-              className={
-                location.pathname === "/employes"
-                  ? "py-2 px-3 text-blue-700"
-                  : "py-2 px-3 text-gray-900"
-              }
-            >
-              Employées
-            </Link>
-          </li>
-
-          {/* Link RÉCAP */}
-          <li>
-            <Link
-              to="/recap"
-              className={
-                location.pathname === "/recap"
-                  ? "py-2 px-3 text-blue-700"
-                  : "py-2 px-3 text-gray-900"
-              }
-            >
-              Récapitulatif
-            </Link>
-          </li>
-        </ul>
+        <div className="hidden w-full md:block md:w-auto" id="navbar-default">
+          <ul className="font-medium flex flex-col md:flex-row md:space-x-8 p-4 md:p-0 mt-4 md:mt-0 border md:border-0 rounded-lg md:bg-white md:dark:bg-gray-900 dark:bg-gray-800 md:dark:bg-transparent">
+            <li>
+              <Link to="/" className={`block py-2 px-3 rounded ${isActive('/')}`}>
+                Planning
+              </Link>
+            </li>
+            <li>
+              <Link to="/clients" className={`block py-2 px-3 rounded ${isActive('/clients')}`}>
+                Clients
+              </Link>
+            </li>
+            <li>
+              <Link to="/employes" className={`block py-2 px-3 rounded ${isActive('/employes')}`}>
+                Employés
+              </Link>
+            </li>
+            <li>
+              <Link to="/recap" className={`block py-2 px-3 rounded ${isActive('/recap')}`}>
+                Récapitulatif
+              </Link>
+            </li>
+          </ul>
+        </div>
       </div>
     </nav>
   );
